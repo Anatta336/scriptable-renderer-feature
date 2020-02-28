@@ -45,11 +45,11 @@ class MyBlitRenderPass : ScriptableRenderPass
     cmd.Clear();
 
     // the actual content of our custom render pass!
-    // we blit the color data from the camera to our texture...
-    cmd.Blit(cameraColorTargetIdent, tempTexture.Identifier());
+    // we apply our material while blitting to a temporary texture
+    cmd.Blit(cameraColorTargetIdent, tempTexture.Identifier(), materialToBlit, 0);
 
-    // ...then blit it back again but through our custom material
-    cmd.Blit(tempTexture.Identifier(), cameraColorTargetIdent, materialToBlit, 0);
+    // ...then blit it back again 
+    cmd.Blit(tempTexture.Identifier(), cameraColorTargetIdent);
 
     // don't forget to tell ScriptableRenderContext to actually execute the commands
     context.ExecuteCommandBuffer(cmd);
